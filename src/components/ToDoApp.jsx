@@ -6,6 +6,8 @@ function ToDoApp() {
   const [nextId, setNextId] = useState(1);
   const [taskName, setTaskName] = useState("");
   const [taskArray, setTaskArray] = useState([]);
+
+  const [taskStatus, setTaskStatus] = useState(true);
   const deleteTask = (id) => {
     setTaskArray(taskArray.filter((task) => task.id !== id));
   };
@@ -24,7 +26,10 @@ function ToDoApp() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            setTaskArray([...taskArray, { name: taskName, id: nextId }]);
+            setTaskArray([
+              ...taskArray,
+              { name: taskName, id: nextId, isComplete: false },
+            ]);
             setNextId(nextId + 1);
           }}
           className="bg-blue-700 text-white rounded-sm pr-5 pl-5 border border-black"
@@ -32,7 +37,12 @@ function ToDoApp() {
           Add
         </button>
       </form>
-      <List taskArray={taskArray} deleteTask={deleteTask} />
+      <List
+        taskArray={taskArray}
+        deleteTask={deleteTask}
+        setTaskArray={setTaskArray}
+        taskStatus={taskStatus}
+      />
     </>
   );
 }
