@@ -1,59 +1,43 @@
 "use client";
-import { useState } from "react";
+import React from "react";
 
-function Item({ taskName, setTaskName, taskArray, setTaskArray }) {
-  const [nextId, setNextId] = useState(1);
-  console.log(taskArray);
-
+function Item({ task, deleteTask, setTaskArray }) {
   return (
-    <div>
-      <form action="" className="flex gap-4 mb-4">
-        <input
-          className="border border-black"
-          type="text"
-          value={taskName}
-          onChange={(e) => {
-            setTaskName(e.target.value);
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setTaskArray([...taskArray, { name: taskName, id: nextId }]);
-            setNextId(nextId + 1);
-          }}
-          className="bg-blue-700 text-white rounded-sm pr-5 pl-5 border border-black"
+    <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-md shadow-sm gap-4">
+      <div>
+        <li
+          className={`text-lg font-medium ${
+            task.isComplete ? "text-gray-700 line-through" : "text-gray-900"
+          }`}
         >
-          Add
+          {task.name}
+        </li>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => deleteTask(task.id)}
+          className="bg-red-500 hover:bg-red-600 text-white rounded-md px-4 py-2 font-semibold"
+        >
+          Delete
         </button>
-      </form>
-      {/* <ul>
-        {taskArray.map((task) => (
-          <>
-            <li key={task.id}> {task.name}</li>
-            <li>{task.id}</li>
-          </>
-        ))}
-      </ul> */}
+        <button
+          onClick={() => {
+            setTaskArray((prevTasks) =>
+              prevTasks.map((t) => {
+                if (t.id === task.id) {
+                  return { ...t, isComplete: !task.isComplete };
+                }
+                return t;
+              })
+            );
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 font-semibold"
+        >
+          {task.isComplete ? "Undo" : "Complete"}
+        </button>
+      </div>
     </div>
   );
 }
-export default Item;
 
-{
-  /* <div className="flex gap-4">
-        <button
-          className="bg-blue-700 text-white rounded-sm pr-5 pl-5 border border-black"
-          type="submit"
-        >
-          Complete
-        </button>
-        <button
-          className="bg-blue-700 text-white rounded-sm pr-5 pl-5 border border-black"
-          type="reset"
-        >
-          Undo
-        </button>
-        <div className="to_do_list"></div>
-      </div> */
-}
+export default Item;

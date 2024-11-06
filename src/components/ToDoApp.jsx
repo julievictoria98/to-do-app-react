@@ -33,7 +33,7 @@ function ToDoApp() {
               { name: taskName, id: nextId, isComplete: false },
             ]);
             setNextId(nextId + 1);
-            // setTaskName("");
+            setTaskName("");
           }}
           className="bg-orange-400 hover:bg-orange-800 text-white rounded-md px-6 py-2 font-semibold transition-colors"
         >
